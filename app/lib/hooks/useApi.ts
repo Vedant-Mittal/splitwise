@@ -5,8 +5,8 @@ const getApiBaseUrl = () => {
   if (typeof window === 'undefined') return ''; // Server-side rendering
   
   if (process.env.NODE_ENV === 'production') {
-    // Your actual Render.com deployment URL
-    return 'https://splitwise-api-1xpz.onrender.com';
+    // Your actual Render.com deployment URL for the mock API
+    return 'https://splitwise-mock-api.onrender.com';
   }
   
   return ''; // In development, use relative URLs
