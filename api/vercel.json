@@ -1,13 +1,19 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.js", "use": "@vercel/node" }
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "index.js" }
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
   ],
   "env": {
-    "DATABASE_URL": "postgresql://postgres:5xv7M%2AU9w59%23Q2@db.fjoeswwrqoxnchyxvesy.supabase.co:5432/postgres",
+    "DATABASE_URL": "postgresql://postgres.fjoeswwrqoxnchyxvesy:5xv7M*U9w59#Q2@aws-0-ap-south-1.pooler.supabase.com:6543/postgres",
     "ALLOWED_ORIGINS": "https://vedant-mittal.github.io,http://localhost:3000"
   }
 } 
