@@ -4,10 +4,10 @@
     { "src": "index.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.js" }
+    { "src": "/(.*)", "dest": "index.js" }
   ],
   "env": {
-    "DATABASE_URL": "@database_url",
-    "ALLOWED_ORIGINS": "@allowed_origins"
+    "DATABASE_URL": "postgresql://postgres:5xv7M%2AU9w59%23Q2@db.fjoeswwrqoxnchyxvesy.supabase.co:5432/postgres",
+    "ALLOWED_ORIGINS": "https://vedant-mittal.github.io,http://localhost:3000"
   }
 } 

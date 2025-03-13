@@ -6,7 +6,7 @@ const getApiBaseUrl = () => {
   
   if (process.env.NODE_ENV === 'production') {
     // This will be your Vercel deployment URL
-    return 'https://splitwise-api.vercel.app';
+    return 'https://api-h00lcb03c-vedant-mittals-projects.vercel.app';
   }
   
   return ''; // In development, use relative URLs
