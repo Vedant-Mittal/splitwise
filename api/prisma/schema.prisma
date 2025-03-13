@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id            String      @id @default(uuid())
+  name          String
+  email         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  paidExpenses  Expense[]   @relation("PaidBy")
+  splitExpenses ExpenseSplit[]
+  fromSettlements Settlement[] @relation("FromPerson")
+  toSettlements   Settlement[] @relation("ToPerson")
+  groupMembers    GroupMember[]
+}
+
+model Expense {
+  id          String        @id @default(uuid())
+  description String
+  amount      Float
+  currency    String
+  date        DateTime      @default(now())
+  paidBy      Person        @relation("PaidBy", fields: [paidById], references: [id])
+  paidById    String
+  category    Category      @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  group       Group?        @relation(fields: [groupId], references: [id])
+  groupId     String?
+  splitAmong  ExpenseSplit[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ExpenseSplit {
+  id        String   @id @default(uuid())
+  expense   Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  expenseId String
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId  String
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([expenseId, personId])
+}
+
+model Group {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  expenses    Expense[]
+  members     GroupMember[]
+  settlements Settlement[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model GroupMember {
+  id        String   @id @default(uuid())
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId   String
+  person    Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupId, personId])
+}
+
+model Settlement {
+  id           String   @id @default(uuid())
+  fromPerson   Person   @relation("FromPerson", fields: [fromPersonId], references: [id])
+  fromPersonId String
+  toPerson     Person   @relation("ToPerson", fields: [toPersonId], references: [id])
+  toPersonId   String
+  amount       Float
+  currency     String
+  date         DateTime @default(now())
+  group        Group?   @relation(fields: [groupId], references: [id])
+  groupId      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String
+  isCustom  Boolean   @default(false)
+  expenses  Expense[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Currency {
+  id           String   @id @default(uuid())
+  code         String   @unique
+  name         String
+  symbol       String
+  exchangeRate Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+} 
