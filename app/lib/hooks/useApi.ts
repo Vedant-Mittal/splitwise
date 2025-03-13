@@ -5,8 +5,8 @@ const getApiBaseUrl = () => {
   if (typeof window === 'undefined') return ''; // Server-side rendering
   
   if (process.env.NODE_ENV === 'production') {
-    // This will be your Render.com deployment URL
-    return 'https://splitwise-api.onrender.com';
+    // Your actual Render.com deployment URL
+    return 'https://splitwise-api-1xpz.onrender.com';
   }
   
   return ''; // In development, use relative URLs
